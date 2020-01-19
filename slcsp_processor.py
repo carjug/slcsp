@@ -43,6 +43,7 @@ def get_silver_plans_from_file():
                     silver_plans[row["state"]] = {row["rate_area"]: set()}
                 elif not silver_plans[row["state"]].get(row["rate_area"]):
                     silver_plans[row["state"]][row["rate_area"]] = set()
+
                 silver_plans[row["state"]][row["rate_area"]].add(row["rate"])
         return silver_plans
 

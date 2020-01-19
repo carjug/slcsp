@@ -2,7 +2,7 @@ import unittest
 from slcsp_processor import get_silver_plans_from_file, get_zips_rate_areas, get_rate_for_zip
 
 
-class TestSLCSPReader(unittest.TestCase):
+class TestSLCSPProcessor(unittest.TestCase):
 
     def test_get_silver_plans_from_file_state_with_silver_plans(self):
         """Test get_silver_plans_from_file and spot check output"""

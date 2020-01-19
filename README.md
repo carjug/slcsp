@@ -2,6 +2,30 @@
 
 ## Calculate the second lowest cost silver plan
 
+## System Requirements
+Python 3.8
+
+## Installing / Getting started
+How to install this project locally:
+
+```shell
+git clone https://github.com/carjug/slcsp.git
+cd slcsp/
+```
+
+### Running the script
+```shell
+cd slcsp/
+python3 slcsp_processor.py
+```
+
+### Running the tests
+To run the unittests from the command line
+```shell
+cd slcsp/
+python3 -m unittest discover -v
+```
+
 ## Problem
 
 You've been asked to determine the second lowest cost silver plan (SLCSP) for

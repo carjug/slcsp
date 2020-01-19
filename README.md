@@ -1,6 +1,7 @@
 # SLCSP
 
 ## Calculate the second lowest cost silver plan
+Coding homework assignment, original instructions found here: https://homework.adhoc.team/slcsp/
 
 ## System Requirements
 Python 3.8

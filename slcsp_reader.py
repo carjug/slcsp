@@ -14,6 +14,7 @@ def main():
     """
     silver_plans = get_silver_plans_from_file()
     zip_rate_areas = get_zips_rate_areas()
+    get_slcsp_by_zip(silver_plans, zip_rate_areas)
 
 
 def get_silver_plans_from_file():
@@ -66,5 +67,33 @@ def get_zips_rate_areas():
             zip_rate_areas[row["zipcode"]].add(
                 (row["state"], row["rate_area"]))
     return zip_rate_areas
+
+
+def get_slcsp_by_zip(silver_plans, zip_rate_areas):
+    """
+    Loads SLCSP csv and gets the associated data
+    for each zipcode therein and prints the results
+    to stdout
+
+    :param silver_plans:
+    :param zip_rate_areas:
+    """
+    print("zipcode,rate")
+    with open(SLCSP_CSV) as slcsp_file:
+        slcsp_reader = csv.DictReader(slcsp_file)
+        for row in slcsp_reader:
+            slcsp_rate = ""
+            rate_areas_for_zip = zip_rate_areas.get(row["zipcode"])
+            # if zip has more than one rate area it is ambiguous
+            # and should not be processed
+            if len(rate_areas_for_zip) == 1:
+                rate_area_tuple = rate_areas_for_zip.pop()
+                rates = silver_plans.get(rate_area_tuple[0], {}).get(rate_area_tuple[1])
+                if rates and len(rates) >= 2:
+                    sorted_rates = sorted(rates)
+                    # get the second lowest rate and format it
+                    slcsp_rate = "{0:.2f}".format(float(sorted_rates[1]))
+
+            print(f"{row['zipcode']},{slcsp_rate}")
 
 main()

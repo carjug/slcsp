@@ -21,15 +21,16 @@ def main():
 
 def get_silver_plans_from_file():
     """
-    Loads all silver plans from csv and returns
-    a dict of dicts mapping a state and rate area
-    to a set of rates
+    Loads all silver plans from csv and iterates over
+    each row to construct a dict that maps
+    the row's state to the row's rate area and
+    the row's rate area to a de-duplicated set of rates
 
-    :return: dict
-
+    :return: dict mapping state to rate area and rate area to
+    set of rates
     e.g.
     {"CA":
-        {11:
+        {"11":
             {345.51, 375.66}
         }
     }
@@ -55,9 +56,9 @@ def get_zips_rate_areas():
     and each set containing tuples of associated
     rate areas for the zipcode
 
-    :return: dict
+    :return: dict mapping zipcode to set of rate area tuples
     e.g.
-    {90026:
+    {"90026":
         {(CA,1), (CA,4), (CA,7)}
     }
     """
@@ -78,8 +79,8 @@ def get_slcsp_by_zip(silver_plans, zip_rate_areas):
     for each zipcode therein and prints the results
     to stdout
 
-    :param silver_plans:
-    :param zip_rate_areas:
+    :param silver_plans: dict of dicts
+    :param zip_rate_areas: dict mapping zipcode to set of rate area tuples
     """
     print("zipcode,rate")
     with open(SLCSP_CSV) as slcsp_file:
@@ -101,8 +102,8 @@ def get_rate_for_zip(rate_areas_for_zip, silver_plans):
 
     :param rate_areas_for_zip: set of rate area tuples
     :param silver_plans: dict of dicts
-    :return: String - empty or formatted rate
 
+    :return: String - empty or formatted rate
     e.g. "234.50"
     """
     slcsp_rate = ""

@@ -13,6 +13,7 @@ def main():
     loading and processing functions
     """
     silver_plans = get_silver_plans_from_file()
+    zip_rate_areas = get_zips_rate_areas()
 
 
 def get_silver_plans_from_file():
@@ -41,4 +42,29 @@ def get_silver_plans_from_file():
                     silver_plans[row["state"]][row["rate_area"]] = set()
                 silver_plans[row["state"]][row["rate_area"]].add(row["rate"])
         return silver_plans
+
+
+def get_zips_rate_areas():
+    """
+    Loads the ZIPS csv and constructs the data into
+    a dict of sets with each key being a zipcode
+    and each set containing tuples of associated
+    rate areas for the zipcode
+
+    :return: dict
+    e.g.
+    {90026:
+        {(CA,1), (CA,4), (CA,7)}
+    }
+    """
+    zip_rate_areas = {}
+    with open(ZIPS_CSV) as csvfile:
+        zip_reader = csv.DictReader(csvfile)
+        for row in zip_reader:
+            if not zip_rate_areas.get(row["zipcode"]):
+                zip_rate_areas[row["zipcode"]] = set()
+            zip_rate_areas[row["zipcode"]].add(
+                (row["state"], row["rate_area"]))
+    return zip_rate_areas
+
 main()
